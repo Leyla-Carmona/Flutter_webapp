@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:webapp/Pages/home.dart';
+import 'package:webapp/providers/providers.dart';
 
 void main() => runApp(const MyApp()); //pernmite dar el inicio de la app
 
@@ -9,17 +11,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'app',
-      home: Recipes(),
-    ); //App llama a Recipes
+    return MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => Apiprovider())],
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Nintendo Amiibo App',
+        home: Start(),
+      ), //App llama a Recipes
+    );
   }
 }
 
-class Recipes extends StatelessWidget {
+class Start extends StatelessWidget {
   //StatelessWidget: Su estado no va a cambiar
-  const Recipes({super.key});
+  const Start({super.key});
 
   @override //Constructor
   Widget build(BuildContext context) {
@@ -27,15 +32,18 @@ class Recipes extends StatelessWidget {
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.blue,
-          title: Text('Recipe Book', style: TextStyle(color: Colors.white)),
+          backgroundColor: const Color.fromARGB(79, 78, 68, 0),
+          title: Text(
+            'Api Nintendo Amiibos',
+            style: TextStyle(color: Colors.white),
+          ),
           bottom: TabBar(
             indicatorColor: Colors.white,
             labelColor: Colors.white,
             tabs: [Tab(icon: Icon(Icons.home), text: 'Home')],
           ),
         ),
-        body: TabBarView(children: [Home()]),
+        body: TabBarView(children: [Homeapp()]),
       ),
     );
   }
